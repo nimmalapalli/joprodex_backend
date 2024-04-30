@@ -1,37 +1,35 @@
 const express = require('express');
 const router = express.Router();
 const Crud = require('../models/crud');
- 
+
 router.post('/createorder', (req, res, next) => {
-    var newcrud = new Crud({
+    const newcrud = new Crud({
         orderId: req.body.orderId,
         orderType: req.body.orderType,
         fname: req.body.fname,
         lname: req.body.lname,
-        companyName:req.body.companyName,
-        Address:req.body.Address,
-        pincode:req.body.pincode,
-        city:req.body.city,
-        state:req.body.state,
-        payment:req.body.payment,
-        product:req.body.product,
-        phone:req.body.phone,
-        weight:req.body.weight,
-        length:req.body.length,
-        width:req.body.width,
-
-
+        companyName: req.body.companyName,
+        Address: req.body.Address,
+        pincode: req.body.pincode,
+        city: req.body.city,
+        state: req.body.state,
+        payment: req.body.payment,
+        product: req.body.product,
+        phone: req.body.phone,
+        weight: req.body.weight,
+        length: req.body.length,
+        width: req.body.width,
     });
- 
-    newcrud.save((err, crud) => {
-        if (err) {
-            res.status(500).json({ errmsg: err });
-        } else {
-            res.status(200).json({ msg: crud });
-        }
-    });
+
+    newcrud.save()
+        .then(savedCrud => {
+            res.status(200).json({ msg: savedCrud });
+        })
+        .catch(err => {
+            res.status(500).json({ errmsg: err.message });
+        });
 });
- 
+
 router.get('/read', async (req, res, next) => {
     try {
         const cruds = await Crud.find({});
@@ -41,6 +39,19 @@ router.get('/read', async (req, res, next) => {
         res.status(500).json({ error: err.message });
     }
 });
+
+ router.get('/getByuserid',(req,res)=>{
+    const userId = req.params.userId;
+    User.findOne(userId,(err,data)=>{
+        if (err){
+            console.log(err);
+        }
+        else{
+            res.send(data)
+        }
+    })
+
+})
  
 router.put('/update/:id', async (req, res, next) => {
     const crudId = req.params.id;
@@ -69,20 +80,16 @@ router.put('/update/:id', async (req, res, next) => {
         res.status(500).json({ errmsg: 'Internal Server Error' });
     }
 });
-router.delete('/delete/:_id', (req, res, next) => {
-    Crud.findOneAndRemove({ _id: req.params._id }, (err, crud) => {
-        if (err) {
-            res.status(500).json({ errmsg: err });
-            return;
-        }
+router.delete('/delete', async (req, res, next) => {
+    try {
+        const deletedCrud = await Crud.findByIdAndDelete(req.params._id);
  
-        if (!crud) {
-            res.status(404).json({ errmsg: 'Crud not found' });
-            return;
-        }
- 
+        
         res.status(200).json({ msg: 'Crud deleted successfully' });
-    });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ errmsg: err.message });
+    }
 });
- 
+
 module.exports = router;
