@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 const app = express();
 const ejs = require("ejs");
 require("dotenv").config();
-const cors = require('cors')
-const twilio =require('twilio')
+const cors = require('cors');
+const twilio =require('twilio');
 const authRoute = require('./routes/auth.route');
 const router = require('./routes/router');
 const pincodeRoute = require('./routes/pincodeRoute.js');
@@ -49,8 +49,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(fileUpload({ createParentPath: true }));
 app.use(express.json());
-app.use('/api',pincodeRoute);
 app.use(express. urlencoded({extended:false}))
+
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 
@@ -98,7 +98,8 @@ app.use('/api', router);
 app.use('/api', shipmentRoute);
 app.use('/api',paymentRoute);
 app.use('/api', appRoute);
-app.use('/api',adminRoute)
+app.use('/api',adminRoute);
+app.use('/api',pincodeRoute);
 
 
 // app.get('/', (req, res) => {

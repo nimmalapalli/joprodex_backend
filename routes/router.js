@@ -57,21 +57,21 @@ router.put('/update/:id', async (req, res, next) => {
     const crudId = req.params.id;
  
     try {
-        // Find the crud by ID
+        
         const crud = await Crud.findById(crudId);
  
         if (!crud) {
             return res.status(404).json({ errmsg: 'Crud not found' });
         }
  
-        // Update crud fields based on the request body
+        
         crud.EmpID = req.body.EmpID;
         crud.EmpName = req.body.EmpName;
         crud.Role = req.body.Role;
         crud.Teamlead = req.body.Teamlead;
         crud.MailID = req.body.MailID;
  
-        // Save the updated crud
+        
         const updatedCrud = await crud.save();
  
         res.status(200).json({ msg: 'Crud updated successfully', crud: updatedCrud });
