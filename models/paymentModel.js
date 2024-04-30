@@ -9,9 +9,7 @@ const createCustomer = async(req,res)=>{
         const customer = await stripe.customers.create({
             name:req.body.name,
             email:req.body.email,
-            amount:req.body.amount,
-            product_name:req.body.product_name,
-            description:req.body.description
+            amount: parseInt(req.body.amount)*100, 
         });
 
         res.status(200).send(customer);
@@ -63,7 +61,7 @@ const createCharges = async(req,res)=>{
 
         const createCharge = await stripe.charges.create({
             receipt_email: 'tester@gmail.com',
-            amount: parseInt(req.body.amount)*100, //amount*100
+            amount: parseInt(req.body.amount)*100, 
             currency:'INR',
             card: req.body.card_id,
             customer: req.body.customer_id
@@ -76,7 +74,6 @@ const createCharges = async(req,res)=>{
     }
 
 }
-
 
 module.exports = {
     createCustomer,

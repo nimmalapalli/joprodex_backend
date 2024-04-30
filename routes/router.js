@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Crud = require('../models/crud');
 
-router.post('/createorder', (req, res, next) => {
+router.post('/create', (req, res, next) => {
     const newcrud = new Crud({
         orderId: req.body.orderId,
         orderType: req.body.orderType,
