@@ -65,12 +65,21 @@ router.put('/update/:id', async (req, res, next) => {
         }
  
         
-        crud.EmpID = req.body.EmpID;
-        crud.EmpName = req.body.EmpName;
-        crud.Role = req.body.Role;
-        crud.Teamlead = req.body.Teamlead;
-        crud.MailID = req.body.MailID;
- 
+        crud.orderId = req.body.orderId;
+        crud.orderType = req.body.orderType;
+        crud.fname = req.body.fname;
+        crud.lname = req.body.lname;
+        crud.companyName = req.body.companyName;
+        crud.Address = req.body.Address;
+        crud.pincode = req.body.pincode;
+        crud.city = req.body.city;
+        crud.state = req.body.state;
+        crud.payment = req.body.payment;
+        crud.product = req.body.product;
+        crud.phone = req.body.phone;
+        crud.weight = req.body.weight;
+        crud.length = req.body.length;
+        crud.width = req.body.width;
         
         const updatedCrud = await crud.save();
  
