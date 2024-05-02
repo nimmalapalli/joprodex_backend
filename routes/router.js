@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const Crud = require('../models/crud');
+const crud = require('../models/crud');
+
+const user = require('../models/user');
+
 
 router.post('/create', (req, res, next) => {
-    const newcrud = new Crud({
+    const newcrud = new crud({
         orderId: req.body.orderId,
         orderType: req.body.orderType,
         fname: req.body.fname,
@@ -30,9 +33,28 @@ router.post('/create', (req, res, next) => {
         });
 });
 
+// async function getCrudWithUser() {
+//     try {
+//         const result = await crud.aggregate([
+//             {
+//                 $lookup: {
+//                     from: 'user', 
+//                     localField: 'userId',
+//                     foreignField: '_id',
+//                     as: 'user'
+//                 }
+//             }
+//         ]);
+//         return result;
+//     } catch (error) {
+//         console.error('Error occurred while performing lookup:', error);
+//         throw error;
+//     }
+// }
+
 router.get('/read', async (req, res, next) => {
     try {
-        const cruds = await Crud.find({});
+        const cruds = await cruds.find({});
         res.status(200).json({ data: cruds, message: 'Cruds retrieved successfully' });
     } catch (err) {
         console.error(err);
@@ -58,13 +80,12 @@ router.put('/update/:id', async (req, res, next) => {
  
     try {
         
-        const crud = await Crud.findById(crudId);
+        const crud = await crud.findById(crudId);
  
         if (!crud) {
             return res.status(404).json({ errmsg: 'Crud not found' });
         }
  
-        
         crud.orderId = req.body.orderId;
         crud.orderType = req.body.orderType;
         crud.fname = req.body.fname;
@@ -91,7 +112,7 @@ router.put('/update/:id', async (req, res, next) => {
 });
 router.delete('/delete', async (req, res, next) => {
     try {
-        const deletedCrud = await Crud.findByIdAndDelete(req.params._id);
+        const deletedCrud = await crud.findByIdAndDelete(req.params._id);
  
         
         res.status(200).json({ msg: 'Crud deleted successfully' });
