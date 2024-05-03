@@ -64,7 +64,7 @@ router.get('/read', async (req, res, next) => {
 
  router.get('/getByuserid',(req,res)=>{
     const userId = req.params.userId;
-    User.findOne(userId,(err,data)=>{
+    user.findOne(userId,(err,data)=>{
         if (err){
             console.log(err);
         }

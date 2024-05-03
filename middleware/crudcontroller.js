@@ -6,7 +6,7 @@ async function getCrudWithUser() {
         const result = await crud.aggregate([
             {
                 $lookup: {
-                    from: 'user',
+                    from: 'user', 
                     localField: 'userId',
                     foreignField: '_id',
                     as: 'user'

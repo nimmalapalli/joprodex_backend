@@ -60,7 +60,7 @@ app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Headers', true);
   res.header('Access-Control-Allow-Credentials', true);
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    next();
+   next();
 });
 var client = new twilio(accountSid,authToken)
 var otp =Math.floor(100000+Math.random()*90000);
